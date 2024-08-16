@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/MaterialIcons";
-import Checkbox from "./common/Checkbox";
+import Checkbox from "../common/Checkbox";
 
 type TaskProps = {
   task: string;
   deleteTask: () => void;
 };
 
-export default function Task({ task, deleteTask }: TaskProps) {
+export default function TaskItem({ task, deleteTask }: TaskProps) {
   const handleDeleteTask = () => {
     deleteTask();
   };

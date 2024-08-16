@@ -1,14 +1,8 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  Button,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import { View, Text, SafeAreaView } from "react-native";
 import AddTaskModal from "@/components/AddTaskModal";
-import Task from "@/components/Task";
+import TasksList from "@/components/tasks/list";
+import PrimaryButton from "@/components/common/primaryButton";
 
 export default function App() {
   const [tasks, setTasks] = useState<string[]>([]);
@@ -26,27 +20,10 @@ export default function App() {
     <SafeAreaView className="flex-1">
       <View className="flex-row py-4 px-6 justify-between items-center">
         <Text className="text-4xl">Tasks</Text>
-        <Pressable className="bg-blue-500  rounded-lg p-1">
-          <Button
-            title="Add Task"
-            color="#ffffff"
-            onPress={() => setShowModal(true)}
-          />
-        </Pressable>
+        <PrimaryButton title="Add Task" onClick={() => setShowModal(true)} />
       </View>
-      <ScrollView className="w-full">
-        {tasks.length > 0 ? (
-          tasks.map((task, index) => (
-            <Task
-              key={index}
-              task={task}
-              deleteTask={() => handleDeleteTask(index)}
-            />
-          ))
-        ) : (
-          <Text className="text-center p-20 text-2xl">No tasks</Text>
-        )}
-      </ScrollView>
+
+      <TasksList tasks={tasks} deleteTask={handleDeleteTask} />
 
       <AddTaskModal
         showModal={showModal}
