@@ -41,6 +41,7 @@ export default function App() {
 
   return (
     <View className="flex-1 p-4 gap-y-4 justify-center items-end bg-gray-900">
+      <Text className="text-3xl text-white">To-do List</Text>
       <Ionicons
         name="add"
         size={32}
