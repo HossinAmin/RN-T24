@@ -8,7 +8,11 @@ type ModalProps = {
   addTask: (task: string) => void;
 };
 
-export default function App({ showModal, setShowModal, addTask }: ModalProps) {
+export default function AddTaskModal({
+  showModal,
+  setShowModal,
+  addTask,
+}: ModalProps) {
   const [newTask, setNewTask] = useState("");
 
   const handleAddTask = () => {
