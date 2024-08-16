@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { View, Text, Pressable, Modal, TextInput } from "react-native";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 type ModalProps = {
   showModal: boolean;
@@ -25,7 +26,12 @@ export default function App({ showModal, setShowModal, addTask }: ModalProps) {
     >
       <View className="flex-1 justify-center items-center bg-white/50">
         <View className="bg-gray-400 rounded-xl p-4 items-center w-3/4 h-1/4">
-          <Text className="text-2xl pb-4">Add Task</Text>
+          <View className="flex-row items-center justify-between w-full pb-4">
+            <Text className="text-2xl ">Add Task</Text>
+            <Pressable onPress={() => setShowModal(false)}>
+              <Ionicons name="close" size={32} color={"#f5f5f5"} />
+            </Pressable>
+          </View>
           <TextInput
             className="border-2 border-white m-4 rounded-lg py-2 w-full"
             value={newTask}
