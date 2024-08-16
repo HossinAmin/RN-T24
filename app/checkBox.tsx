@@ -13,7 +13,7 @@ export default function Checkbox({ isChecked, onToggle }: CheckboxProps) {
       <Ionicons
         name={isChecked ? "checkbox-outline" : "square-outline"}
         size={24}
-        color={isChecked ? "green" : "gray"}
+        color={isChecked ? "black" : "gray"}
       />
     </TouchableOpacity>
   );
