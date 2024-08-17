@@ -1,3 +1,4 @@
+/// https://dummyjson.com/docs/products
 export type Review = {
   rating: number;
   comment: string;

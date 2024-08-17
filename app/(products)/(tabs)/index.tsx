@@ -4,16 +4,13 @@ import { useEffect, useState } from "react";
 import { Product, ProductsResponse } from "@/types/products";
 import { Link, router } from "expo-router";
 import { paths } from "@/constants/paths";
+import useProducts from "@/hooks/useProducts";
 
 export default function App() {
-  const [products, setProducts] = useState<Product[]>();
+  const { products, fetchProducts } = useProducts();
 
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((data: ProductsResponse) => {
-        setProducts(data.products);
-      });
+    fetchProducts();
   }, []);
 
   return (

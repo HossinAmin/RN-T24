@@ -4,15 +4,14 @@ import { router, useLocalSearchParams } from "expo-router";
 import { View, Text, Image, ActivityIndicator, Button } from "react-native";
 import { Product } from "@/types/products";
 import { Navbar } from "@/components/Navbar";
+import useProducts from "@/hooks/useProducts";
 
 export default function SingleProduct() {
-  const [product, setProduct] = useState<Product>();
+  const { fetchProduct, product } = useProducts();
   const { id: product_id } = useLocalSearchParams();
 
   useEffect(() => {
-    fetch(`https://dummyjson.com/products/${product_id}`)
-      .then((res) => res.json())
-      .then((data) => setProduct(data));
+    fetchProduct(product_id?.toString() ?? "");
   }, []);
 
   return (
@@ -33,7 +32,7 @@ export default function SingleProduct() {
             <Text className="text-gray-500 mb-2">
               Warranty: {product.warrantyInformation}
             </Text>
-            <Text className="text-gray-500 mb-2">Brand: {product.brand}</Text>
+            <Text className="text-gray-500 mb-2">Brand: S{product.brand}</Text>
             <Button
               title="add to cart"
               onPress={() => router.navigate("/login")}
