@@ -3,8 +3,7 @@ import { ScrollView, Pressable, View, Platform } from "react-native";
 import { useEffect, useState } from "react";
 import { Product, ProductsResponse } from "@/types/products";
 import { Link, router } from "expo-router";
-import { useNavigationState } from "@react-navigation/native";
-import { Navbar } from "@/components/Navbar";
+import { paths } from "@/constants/paths";
 
 export default function App() {
   const [products, setProducts] = useState<Product[]>();
@@ -18,16 +17,18 @@ export default function App() {
   }, []);
 
   return (
-    <ScrollView>
-      {products?.map((product) => (
-        <Pressable
-          className="m-4"
-          key={product.id}
-          onPress={() => router.navigate("/product/" + product.id)}
-        >
-          <ProductCard product={product} />
-        </Pressable>
-      ))}
-    </ScrollView>
+    <View>
+      <ScrollView>
+        {products?.map((product) => (
+          <Pressable
+            className="my-4"
+            key={product.id}
+            onPress={() => router.navigate(`${paths.products}${product.id}`)}
+          >
+            <ProductCard product={product} />
+          </Pressable>
+        ))}
+      </ScrollView>
+    </View>
   );
 }

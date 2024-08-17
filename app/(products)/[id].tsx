@@ -3,10 +3,11 @@ import { router, useLocalSearchParams } from "expo-router";
 
 import { View, Text, Image, ActivityIndicator, Button } from "react-native";
 import { Product } from "@/types/products";
+import { Navbar } from "@/components/Navbar";
 
 export default function SingleProduct() {
   const [product, setProduct] = useState<Product>();
-  const { product_id } = useLocalSearchParams();
+  const { id: product_id } = useLocalSearchParams();
 
   useEffect(() => {
     fetch(`https://dummyjson.com/products/${product_id}`)

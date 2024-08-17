@@ -1,6 +1,6 @@
 import React from "react";
 import { Text } from "react-native";
 
-export default function Login() {
-  return <Text>Login</Text>;
+export default function Cart() {
+  return <Text>Cart</Text>;
 }
