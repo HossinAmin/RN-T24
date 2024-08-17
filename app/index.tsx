@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, SafeAreaView } from "react-native";
+import { View, Text, SafeAreaView, Pressable, Button } from "react-native";
 import AddTaskModal from "@/components/AddTaskModal";
 import TasksList from "@/components/tasks/list";
-import PrimaryButton from "@/components/common/primaryButton";
 
 export default function App() {
   const [tasks, setTasks] = useState<string[]>([]);
@@ -20,7 +19,12 @@ export default function App() {
     <SafeAreaView className="flex-1">
       <View className="flex-row py-4 px-6 justify-between items-center">
         <Text className="text-4xl">Tasks</Text>
-        <PrimaryButton title="Add Task" onClick={() => setShowModal(true)} />
+        <Pressable
+          className="bg-blue-500  rounded-lg p-2"
+          onPress={() => setShowModal(true)}
+        >
+          <Text className="text-white"> Add Task</Text>
+        </Pressable>
       </View>
 
       <TasksList tasks={tasks} deleteTask={handleDeleteTask} />
