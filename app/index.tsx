@@ -1,45 +1,39 @@
-import Task from "@/components/Task";
 import React, { useState } from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import { View, Text, SafeAreaView, Pressable, Button } from "react-native";
+import AddTaskModal from "@/components/AddTaskModal";
+import TasksList from "@/components/tasks/list";
 
 export default function App() {
-  const [tasks, setTasks] = useState([
-    { details: "todo app", done: false },
-    { details: "read docs", done: false },
-  ]);
+  const [tasks, setTasks] = useState<string[]>([]);
+  const [showModal, setShowModal] = useState(false);
 
-  const [value, setValue] = useState("");
-
-  const addTask = (value: string) => {
-    setTasks((oldValue) => [...oldValue, { details: value, done: false }]);
+  const addTask = (task: string) => {
+    setTasks((preTasks) => [...preTasks, task]);
   };
 
-  const handelDone = (newValue: boolean, index: number) => {
-    setTasks((preTasks) => {
-      const temp = [...preTasks];
-      temp[index].done = newValue;
-      return temp;
-    });
+  const handleDeleteTask = (index: number) => {
+    setTasks((preTasks) => preTasks.filter((_, i) => i !== index));
   };
 
   return (
-    <View className="flex-1 p-10 items-center">
-      {tasks.map((task, index) => (
-        <Task
-          key={index}
-          task={task}
-          onDone={(value) => handelDone(value, index)}
-        />
-      ))}
-
-      <View className="w-full gap-y-2">
-        <Text>New Task:</Text>
-        <TextInput
-          className="bg-white rounded border w-full"
-          onChangeText={setValue}
-        />
-        <Button title="add task" onPress={() => addTask(value)} />
+    <SafeAreaView className="flex-1">
+      <View className="flex-row py-4 px-6 justify-between items-center">
+        <Text className="text-4xl">Tasks</Text>
+        <Pressable
+          className="bg-blue-500  rounded-lg p-2"
+          onPress={() => setShowModal(true)}
+        >
+          <Text className="text-white"> Add Task</Text>
+        </Pressable>
       </View>
-    </View>
+
+      <TasksList tasks={tasks} deleteTask={handleDeleteTask} />
+
+      <AddTaskModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        addTask={addTask}
+      />
+    </SafeAreaView>
   );
 }
