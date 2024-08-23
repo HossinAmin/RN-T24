@@ -11,7 +11,7 @@ export default function Login() {
 
   const handleLogin = async () => {
     if (username === "user" && password === "password") {
-      const userToken = "exampleToken123";
+      const userToken = "Token123";
       await setToken(userToken);
       router.push("/todo");
     } else {
