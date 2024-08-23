@@ -1,27 +1,20 @@
-import React, { useState } from "react";
-import { Pressable, View } from "react-native";
+import React from "react";
+import { TouchableOpacity } from "react-native";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
-type CheckBoxPropType = {
-  value: boolean;
-  onChange: (value: boolean) => void;
+type CheckboxProps = {
+  isChecked: boolean;
+  onToggle: () => void;
 };
 
-export default function CheckBox({ value, onChange }: CheckBoxPropType) {
-  const handlePress = () => {
-    onChange(!value);
-  };
-
+export default function Checkbox({ isChecked, onToggle }: CheckboxProps) {
   return (
-    <Pressable
-      className="border-black border-[2px] w-5 aspect-square rounded-[2px]"
-      onPress={handlePress}
-    >
-      <View
-        className="border-white border-[2px] w-full aspect-square rounded-[2px]"
-        style={{
-          backgroundColor: value ? "black" : "white",
-        }}
+    <TouchableOpacity onPress={onToggle} className="flex-row items-center">
+      <Ionicons
+        name={isChecked ? "checkbox-outline" : "square-outline"}
+        size={24}
+        color={isChecked ? "black" : "gray"}
       />
-    </Pressable>
+    </TouchableOpacity>
   );
 }
