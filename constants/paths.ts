@@ -1,4 +1,5 @@
 export const paths = {
   index: "/",
-  products: "/",
+  products: "/products",
+  product: (id: string) => `/products/${id}`,
 };

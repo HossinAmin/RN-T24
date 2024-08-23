@@ -1,4 +1,6 @@
 import { Stack } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+
 import React from "react";
 
 export default function Layout() {
@@ -6,7 +8,9 @@ export default function Layout() {
     <Stack
       screenOptions={{
         headerShown: false,
-        contentStyle: { marginVertical: 20 },
+        contentStyle: {
+          paddingTop: 20,
+        },
       }}
     />
   );

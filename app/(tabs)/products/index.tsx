@@ -20,7 +20,9 @@ export default function App() {
           <Pressable
             className="my-4"
             key={product.id}
-            onPress={() => router.navigate(`${paths.products}${product.id}`)}
+            onPress={() =>
+              router.navigate(paths.product(product.id.toString()))
+            }
           >
             <ProductCard product={product} />
           </Pressable>

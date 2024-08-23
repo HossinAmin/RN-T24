@@ -1,5 +1,5 @@
 import { Product, ProductsResponse } from "@/types/products";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export default function useProducts() {
   const [products, setProducts] = useState<Product[]>();
@@ -14,7 +14,7 @@ export default function useProducts() {
 
   const fetchProduct = async (id: string) => {
     const res = await fetch(`https://dummyjson.com/products/${id}`);
-    const data: ProductsResponse = await res.json();
+    const data: Product = await res.json();
 
     setProduct(data);
   };
