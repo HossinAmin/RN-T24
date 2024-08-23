@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, Button } from "react-native";
 import { useRouter } from "expo-router";
 import { useAuthStore } from "../store/useAuthStore";
@@ -7,11 +7,7 @@ export default function Login() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const router = useRouter();
-  const { setToken, loadToken } = useAuthStore();
-
-  useEffect(() => {
-    loadToken();
-  }, [loadToken]);
+  const { setToken } = useAuthStore();
 
   const handleLogin = async () => {
     if (username === "user" && password === "password") {

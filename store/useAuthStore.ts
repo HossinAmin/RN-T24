@@ -5,7 +5,6 @@ type AuthStore = {
   token: string | null;
   setToken: (token: string) => Promise<void>;
   clearToken: () => Promise<void>;
-  loadToken: () => Promise<void>;
 };
 
 export const useAuthStore = create<AuthStore>((set) => ({
@@ -19,12 +18,5 @@ export const useAuthStore = create<AuthStore>((set) => ({
   clearToken: async () => {
     await SecureStore.deleteItemAsync("userToken");
     set({ token: null });
-  },
-
-  loadToken: async () => {
-    const token = await SecureStore.getItemAsync("userToken");
-    if (token) {
-      set({ token });
-    }
   },
 }));

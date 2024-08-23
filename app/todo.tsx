@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, TextInput, Button, Modal, Pressable } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Checkbox from "../components/checkBox";
@@ -15,12 +15,8 @@ export default function TodoApp() {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [todoValue, setTodoValue] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
-  const { token, clearToken, loadToken } = useAuthStore();
+  const { clearToken } = useAuthStore();
   const router = useRouter();
-
-  useEffect(() => {
-    loadToken();
-  }, [loadToken]);
 
   const handleLogout = async () => {
     await clearToken();
@@ -54,11 +50,10 @@ export default function TodoApp() {
 
   return (
     <View className="flex-1 p-4 gap-y-4 justify-center items-end bg-gray-900">
-      {token && (
-        <View className="flex-row items-center justify-start w-full">
-          <Button title="Logout" onPress={handleLogout} />
-        </View>
-      )}
+      <View className="flex-row items-center justify-start w-full">
+        <Button title="Logout" onPress={handleLogout} />
+      </View>
+
       <Text className="text-3xl text-white">To-do List</Text>
       <Ionicons
         name="add"
