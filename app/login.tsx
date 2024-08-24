@@ -8,10 +8,37 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState<{ email: string; password: string }>();
 
-  const state = useUserStore((state) => state);
-  const validateForm = () => {};
+  const { user, login } = useUserStore();
 
-  const handleSubmit = () => {};
+  const validateForm = () => {
+    const errors = {};
+
+    if (!password) {
+      errors.password = "Password is required";
+    } else if (password.length < 6) {
+      errors.password = "Password must be at least 6 characters";
+    }
+
+    setErrors(errors);
+
+    console.log(errors);
+
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = () => {
+    console.log(validateForm());
+
+    if (validateForm()) {
+      login({
+        email: email,
+        name: "hossin",
+        image: "https://randomuser.me/api/portraits/men/75.jpg",
+      });
+
+      console.log(user);
+    }
+  };
 
   return (
     <View className="flex-1 items-center justify-center bg-gray-100">
