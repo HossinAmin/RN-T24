@@ -11,7 +11,7 @@ export default function Login() {
   const { user, login } = useUserStore();
 
   const validateForm = () => {
-    const errors = {};
+    const errors: any = {};
 
     if (!password) {
       errors.password = "Password is required";
