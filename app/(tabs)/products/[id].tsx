@@ -5,6 +5,7 @@ import { View, Text, Image, ActivityIndicator, Button } from "react-native";
 import { Product } from "@/types/products";
 import { Navbar } from "@/components/Navbar";
 import useProducts from "@/hooks/useProducts";
+import useCartStore from "@/store/cart";
 
 export default function SingleProduct() {
   const { fetchProduct, product } = useProducts();
@@ -14,6 +15,15 @@ export default function SingleProduct() {
     fetchProduct(product_id?.toString() ?? "");
   }, []);
 
+  const { addToCart } = useCartStore();
+
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product);
+    } else {
+      console.log("no product");
+    }
+  };
   return (
     <View className="flex-1 justify-center">
       {product ? (
@@ -33,10 +43,7 @@ export default function SingleProduct() {
               Warranty: {product.warrantyInformation}
             </Text>
             <Text className="text-gray-500 mb-2">Brand: S{product.brand}</Text>
-            <Button
-              title="add to cart"
-              onPress={() => router.navigate("/login")}
-            ></Button>
+            <Button title="add to cart" onPress={handleAddToCart}></Button>
           </View>
         </>
       ) : (
