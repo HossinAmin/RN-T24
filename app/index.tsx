@@ -1,39 +1,65 @@
-import React, { useState } from "react";
-import { View, Text, SafeAreaView, Pressable, Button } from "react-native";
-import AddTaskModal from "@/components/AddTaskModal";
-import TasksList from "@/components/tasks/list";
+import React, { useEffect } from "react";
+import {
+  SafeAreaView,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  Keyboard,
+  TouchableWithoutFeedback,
+} from "react-native";
+import { router } from "expo-router";
+import { useLogin } from "@/store/useLogin";
 
 export default function App() {
-  const [tasks, setTasks] = useState<string[]>([]);
-  const [showModal, setShowModal] = useState(false);
+  const { email, password, setEmail, setPassword, storeToken, getToken } =
+    useLogin();
 
-  const addTask = (task: string) => {
-    setTasks((preTasks) => [...preTasks, task]);
+  const handleLogin = () => {
+    console.log("Login attempted with:", { email, password });
+    storeToken("token", password);
+    router.push("/home");
   };
 
-  const handleDeleteTask = (index: number) => {
-    setTasks((preTasks) => preTasks.filter((_, i) => i !== index));
+  const closeKeyboard = () => {
+    Keyboard.dismiss();
   };
+
+  useEffect(() => {
+    getToken("token").then((token) => {
+      if (token) {
+        router.push("/home");
+      }
+    });
+  }, []);
 
   return (
-    <SafeAreaView className="flex-1">
-      <View className="flex-row py-4 px-6 justify-between items-center">
-        <Text className="text-4xl">Tasks</Text>
-        <Pressable
-          className="bg-blue-500  rounded-lg p-2"
-          onPress={() => setShowModal(true)}
+    <TouchableWithoutFeedback onPress={closeKeyboard}>
+      <SafeAreaView className="flex-1 justify-center items-center bg-white">
+        <Text className="text-2xl font-bold mb-5 text-[#3b82f6]">Login</Text>
+        <TextInput
+          className="w-10/12 h-10 border border-[#3b82f6] rounded-md mb-4 px-2"
+          placeholder="Email"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          placeholderTextColor={"#737373"}
+        />
+        <TextInput
+          className="w-10/12 h-10 border border-[#3b82f6] rounded-md mb-4 px-2"
+          placeholder="Password"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+          placeholderTextColor={"#737373"}
+        />
+        <TouchableOpacity
+          className="bg-[#3b82f6] p-2.5 w-6/12 rounded-md mt-5 items-center"
+          onPress={handleLogin}
         >
-          <Text className="text-white"> Add Task</Text>
-        </Pressable>
-      </View>
-
-      <TasksList tasks={tasks} deleteTask={handleDeleteTask} />
-
-      <AddTaskModal
-        showModal={showModal}
-        setShowModal={setShowModal}
-        addTask={addTask}
-      />
-    </SafeAreaView>
+          <Text className="text-white text-base font-bold">Log In</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 }
