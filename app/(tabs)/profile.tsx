@@ -9,11 +9,9 @@ NativeWindStyleSheet.setOutput({
 });
 
 const UserProfile = () => {
-  const navigation = useNavigation();
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState("John Doe");
-
-  const { logout } = useUserStore();
+  const { user, editName, logout } = useUserStore();
+  const [newName, setNewName] = useState(user?.name);
 
   const handleLogout = () => {
     /// user = null
@@ -24,6 +22,7 @@ const UserProfile = () => {
     if (isEditing) {
       // Save the new name
       // You might want to implement an API call here to update the name on the server
+      editName(newName ?? "");
       setIsEditing(false);
     } else {
       setIsEditing(true);
@@ -39,22 +38,19 @@ const UserProfile = () => {
           {isEditing ? (
             <TextInput
               className="flex-1 border border-gray-300 rounded p-2"
-              value={name}
-              onChangeText={setName}
+              value={newName}
+              onChangeText={setNewName}
               autoFocus
             />
           ) : (
-            <Text className="text-lg">{name}</Text>
+            <Text className="text-lg">{user?.name}</Text>
           )}
           <TouchableOpacity onPress={handleEditName} className="ml-2">
             <Text className="text-blue-500">{isEditing ? "Save" : "Edit"}</Text>
           </TouchableOpacity>
         </View>
         <Text className="text-lg mb-2">
-          <Text className="font-semibold">Email:</Text> johndoe@example.com
-        </Text>
-        <Text className="text-lg mb-2">
-          <Text className="font-semibold">Phone:</Text> +1 234 567 8900
+          <Text className="font-semibold">Email:</Text> {user?.email}
         </Text>
       </View>
       <TouchableOpacity
