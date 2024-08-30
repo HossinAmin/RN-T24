@@ -1,45 +1,21 @@
-import Task from "@/components/Task";
-import React, { useState } from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import React, { useEffect } from "react";
+import { SafeAreaView } from "react-native";
+import { useLoginStore } from "@/store/useLoginStore";
+import useSurreal from "@/hooks/useSurreal";
+import Login from "./login";
+import Home from "./home";
 
 export default function App() {
-  const [tasks, setTasks] = useState([
-    { details: "todo app", done: false },
-    { details: "read docs", done: false },
-  ]);
+  const { initDb } = useSurreal();
+  const { token } = useLoginStore();
 
-  const [value, setValue] = useState("");
-
-  const addTask = (value: string) => {
-    setTasks((oldValue) => [...oldValue, { details: value, done: false }]);
-  };
-
-  const handelDone = (newValue: boolean, index: number) => {
-    setTasks((preTasks) => {
-      const temp = [...preTasks];
-      temp[index].done = newValue;
-      return temp;
-    });
-  };
+  useEffect(() => {
+    initDb();
+  }, []);
 
   return (
-    <View className="flex-1 p-10 items-center">
-      {tasks.map((task, index) => (
-        <Task
-          key={index}
-          task={task}
-          onDone={(value) => handelDone(value, index)}
-        />
-      ))}
-
-      <View className="w-full gap-y-2">
-        <Text>New Task:</Text>
-        <TextInput
-          className="bg-white rounded border w-full"
-          onChangeText={setValue}
-        />
-        <Button title="add task" onPress={() => addTask(value)} />
-      </View>
-    </View>
+    <SafeAreaView className="flex-1">
+      {token ? <Home /> : <Login />}
+    </SafeAreaView>
   );
 }
