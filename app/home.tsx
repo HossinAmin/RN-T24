@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { View, Text, SafeAreaView, Pressable } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import { Link } from "expo-router";
-import Ionicons from "@expo/vector-icons/MaterialIcons";
 import AddTaskModal from "@/components/AddTaskModal";
 import TasksList from "@/components/tasks/list";
+import Ionicons from "@expo/vector-icons/MaterialIcons";
 
 export default function Home() {
   const [tasks, setTasks] = useState<string[]>([]);
@@ -18,7 +18,7 @@ export default function Home() {
   };
 
   return (
-    <SafeAreaView className="flex-1">
+    <View className="flex-1">
       <View className="flex-row py-4 px-6 justify-between items-center">
         <View className="flex-row items-center">
           <Link href="/">
@@ -41,6 +41,6 @@ export default function Home() {
         setShowModal={setShowModal}
         addTask={addTask}
       />
-    </SafeAreaView>
+    </View>
   );
 }

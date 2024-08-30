@@ -23,6 +23,7 @@ export default function useSurreal() {
       const token = await db.signin({
         scope: "members",
         email,
+        password,
       });
       console.log("Logged in with token:", token);
 
