@@ -11,7 +11,7 @@ type Todo = {
   isChecked: boolean;
 };
 
-export default function TodoApp() {
+export default function Todo() {
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [todoValue, setTodoValue] = useState<string>("");
   const [todos, setTodos] = useState<Todo[]>([]);
@@ -19,7 +19,7 @@ export default function TodoApp() {
   const router = useRouter();
 
   const handleLogout = async () => {
-    await clearToken();
+    clearToken();
     router.push("/");
   };
 
@@ -49,7 +49,7 @@ export default function TodoApp() {
   };
 
   return (
-    <View className="flex-1 p-4 gap-y-4 justify-center items-end bg-gray-900">
+    <View className="flex-1 p-4 gap-y-4 w-full justify-center items-end bg-gray-900">
       <View className="flex-row items-center justify-start w-full">
         <Button title="Logout" onPress={handleLogout} />
       </View>
@@ -65,6 +65,13 @@ export default function TodoApp() {
       <Modal transparent={true} visible={modalVisible} animationType="fade">
         <View className="flex-1 justify-center items-center bg-black bg-opacity-50">
           <View className="w-full p-4 bg-gray-800 rounded-lg">
+            <Pressable
+              onPress={() => setModalVisible(false)}
+              style={{ alignSelf: "flex-end", marginBottom: 10 }}
+            >
+              <Ionicons name="close" size={24} color="white" />
+            </Pressable>
+
             <TextInput
               placeholder="Enter your to-do"
               value={todoValue}
