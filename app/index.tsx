@@ -1,45 +1,21 @@
-import Task from "@/components/Task";
-import React, { useState } from "react";
-import { View, Text, Button, TextInput } from "react-native";
+import React, { useEffect } from "react";
+import { View } from "react-native";
+import { useAuthStore } from "../store/useAuthStore";
+import useSurreal from "../utils/surreal";
+import Todo from "./todo";
+import Login from "./login";
 
 export default function App() {
-  const [tasks, setTasks] = useState([
-    { details: "todo app", done: false },
-    { details: "read docs", done: false },
-  ]);
+  const { token } = useAuthStore();
+  const { initDb } = useSurreal();
 
-  const [value, setValue] = useState("");
-
-  const addTask = (value: string) => {
-    setTasks((oldValue) => [...oldValue, { details: value, done: false }]);
-  };
-
-  const handelDone = (newValue: boolean, index: number) => {
-    setTasks((preTasks) => {
-      const temp = [...preTasks];
-      temp[index].done = newValue;
-      return temp;
-    });
-  };
+  useEffect(() => {
+    initDb();
+  }, []);
 
   return (
-    <View className="flex-1 p-10 items-center">
-      {tasks.map((task, index) => (
-        <Task
-          key={index}
-          task={task}
-          onDone={(value) => handelDone(value, index)}
-        />
-      ))}
-
-      <View className="w-full gap-y-2">
-        <Text>New Task:</Text>
-        <TextInput
-          className="bg-white rounded border w-full"
-          onChangeText={setValue}
-        />
-        <Button title="add task" onPress={() => addTask(value)} />
-      </View>
+    <View className="flex-1 justify-center items-center w-full bg-gray-900 p-4">
+      {token ? <Todo /> : <Login />}
     </View>
   );
 }
